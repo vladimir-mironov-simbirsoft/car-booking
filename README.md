@@ -1,73 +1,76 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Car-Booking Service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### Для запуска проекта:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+1. Запустить БД
+2. Прописать параметры БД в файле `.env` в корне проекта по примеру `.env.example`
+3. Установить зависимости: `make install`
+4. Создать структуру БД: `make migration`
+5. Создать парк автомобилей: `make seed`
+6. Запустить проект: `make run`
 
-## Description
+## Маршруты
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+После запуска доступны 2 маршрута:
 
-## Installation
+### 1. Создать бронь
 
-```bash
-$ npm install
+`POST` `http://localhost:3000/api/v1/booking`
+
+*Body*
+```json
+{
+  "carId": 1,
+  "from": "2021-01-01",
+  "to": "2021-01-02"
+}
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+*Response*
+```json
+{
+    "ok": true,
+    "cost": 1000
+}
 ```
 
-## Test
+---
 
-```bash
-# unit tests
-$ npm run test
+### 2. Сгенерировать отчет
 
-# e2e tests
-$ npm run test:e2e
+`GET` `http://localhost:3000/api/v1/booking/report?year=2021&month=1`
 
-# test coverage
-$ npm run test:cov
+*Response:*
+```json
+{
+    "ok": true,
+    "cars": [
+        {
+            "carId": 1,
+            "licensePlate": "A000AA",
+            "activityPercentage": 93.33
+        },
+        {
+            "carId": 2,
+            "licensePlate": "A001AA",
+            "activityPercentage": 46.67
+        },
+        {
+            "carId": 3,
+            "licensePlate": "A002AA",
+            "activityPercentage": 80
+        },
+        {
+            "carId": 4,
+            "licensePlate": "A003AA",
+            "activityPercentage": 13.33
+        },
+        {
+            "carId": 5,
+            "licensePlate": "A004AA",
+            "activityPercentage": 0
+        }
+    ],
+    "totalPercentage": 46.67
+}
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
